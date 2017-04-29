@@ -7,8 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import "SecurityStrategy.h"
 
 @interface AppDelegate ()
+@property (nonatomic, strong)UIImageView *blurImage;
 
 @end
 
@@ -30,6 +32,16 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    //移除模糊效果
+    [SecurityStrategy removeBlurEffect];
+    if (self.blurImage)
+    {
+        [self.blurImage removeFromSuperview];
+        self.blurImage = nil;
+    }
+    //添加模糊效果
+    self.blurImage = [SecurityStrategy addBlurEffect];
+    
 }
 
 
@@ -40,6 +52,13 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    //移除模糊效果
+    if (self.blurImage)
+    {
+        [self.blurImage removeFromSuperview];
+        self.blurImage = nil;
+    }
+    [SecurityStrategy removeBlurEffect];
 }
 
 
